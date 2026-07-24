@@ -1,53 +1,47 @@
 <script setup lang="ts">
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card' 
 import { Head } from '@inertiajs/vue3';
-import PendingInvitationsModal from '@/components/PendingInvitationsModal.vue';
+import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { dashboard } from '@/routes';
-import type { DashboardInvitation } from '@/types';
-
-defineProps<{
-    pendingInvitations?: DashboardInvitation[];
-}>();
 
 defineOptions({
-    layout: () => ({
+    layout: {
         breadcrumbs: [
             {
-                title: 'Beranda',
-                href: dashboard().url,
+                title: 'Dashboard',
+                href: dashboard(),
             },
         ],
-    }),
+    },
 });
 </script>
 
 <template>
-    <Head title="Beranda" />
+    <Head title="Dashboard" />
 
-    <PendingInvitationsModal
-        v-if="pendingInvitations && pendingInvitations.length > 0"
-        :invitations="pendingInvitations"
-    />
-
-    <div class="flex flex-1 items-start justify-start bg-gradient-to-br from-chart-2/10 via-background to-chart-5/10 p-6">
-        <Card class="w-full max-w-7xl">
-            <CardHeader class="pb-4">
-                <CardTitle class="text-3xl font-bold">
-                    Selamat Datang di Dashboard Admin
-                </CardTitle>
-
-                <CardDescription class="mt-2 text-base">
-                    Kelola seluruh data dan aktivitas website anda melalui dashboard ini.
-                </CardDescription>
-            </CardHeader>
-
-        </Card>
+    <div
+        class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+    >
+        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div
+                class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
+            >
+                <PlaceholderPattern />
+            </div>
+            <div
+                class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
+            >
+                <PlaceholderPattern />
+            </div>
+            <div
+                class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
+            >
+                <PlaceholderPattern />
+            </div>
+        </div>
+        <div
+            class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
+        >
+            <PlaceholderPattern />
+        </div>
     </div>
 </template>
