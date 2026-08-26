@@ -189,7 +189,7 @@ test('team invitations can be accepted', function () {
         ->actingAs($invitedUser)
         ->get(route('invitations.accept', $invitation));
 
-    $response->assertRedirect(route('dashboard'));
+    $response->assertRedirect(route('admin.dashboard'));
     $response->assertInertiaFlash('toast', ['type' => 'success', 'message' => 'Invitation accepted.']);
 
     expect($invitedUser->fresh()->belongsToTeam($team))->toBeTrue();
@@ -213,7 +213,7 @@ test('team invitations can be declined by the invited user', function () {
         ->actingAs($invitedUser)
         ->delete(route('invitations.decline', $invitation));
 
-    $response->assertRedirect(route('dashboard'));
+    $response->assertRedirect(route('admin.dashboard'));
 
     $this->assertDatabaseMissing('team_invitations', [
         'id' => $invitation->id,

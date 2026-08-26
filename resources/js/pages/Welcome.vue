@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import LandingHero from '@/landing/components/Landing.vue';
 import Destinations from '@/landing/components/Destinations.vue';
+import LandingHero from '@/landing/components/Landing.vue';
 import Pricing from '@/landing/components/Pricing.vue';
 import Testimonial from '@/landing/components/Testimonial.vue';
 </script>

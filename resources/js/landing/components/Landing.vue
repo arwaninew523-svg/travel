@@ -74,7 +74,10 @@ const slides = [
 ]
 
 function goTo(index) {
-  if (index === current.value) return
+  if (index === current.value) {
+return
+}
+
   prevIndex.value = current.value
   current.value = index
   resetInterval()
@@ -100,15 +103,18 @@ onMounted(() => {
   handleScroll = () => {
     const value = window.scrollY
     const imgs = heroRef.value?.querySelectorAll('.slide img')
+
     if (imgs) {
       imgs.forEach(el => {
         el.style.transform = `translateY(${value * 0.12}px) scale(1.1)`
       })
     }
+
     if (controlsRef.value) {
       controlsRef.value.style.transform = `translateY(${-value * 0.08}px)`
       controlsRef.value.style.opacity = Math.max(0, 1 - value / 500)
     }
+
     if (visitTextRef.value) {
       visitTextRef.value.style.transform = `translateY(${-value * 0.15}px)`
     }

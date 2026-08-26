@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import {
+    BookOpen,
+    FolderGit2,
+    ShieldCheck,
+    Users,
+} from '@lucide/vue';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -14,14 +20,29 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { index as adminUsersIndex } from '@/routes/admin/users';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+const page = usePage();
+const authUser = computed(() => page.props.auth?.user);
+
+const isAdminOrOperator = computed(() =>
+    ['admin', 'operator'].includes(
+        (authUser.value?.role as string | undefined) ?? '',
+    ),
+);
+
+const adminNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        title: 'Dashboard Admin',
+        href: adminDashboard(),
+        icon: ShieldCheck,
+    },
+    {
+        title: 'Manajemen Pengguna',
+        href: adminUsersIndex(),
+        icon: Users,
     },
 ];
 
@@ -45,7 +66,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="adminDashboard()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
@@ -54,7 +75,11 @@ const footerNavItems: NavItem[] = [
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain
+                v-if="isAdminOrOperator"
+                label="Admin"
+                :items="adminNavItems"
+            />
         </SidebarContent>
 
         <SidebarFooter>

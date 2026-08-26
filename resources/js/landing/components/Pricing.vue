@@ -52,7 +52,10 @@ import { ref } from "vue";
 const track = ref(null)
 
 function scroll(dir) {
-  if (!track.value) return
+  if (!track.value) {
+return
+}
+
   const w = track.value.querySelector('.card')?.offsetWidth || 300
   track.value.scrollBy({ left: dir * (w + 24), behavior: 'smooth' })
 }

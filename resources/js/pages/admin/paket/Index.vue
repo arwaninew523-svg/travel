@@ -1,4 +1,5 @@
 <script>
+import { Head } from '@inertiajs/vue3'
 import {
   Card,
   CardContent,
@@ -7,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card' 
-import { Head } from '@inertiajs/vue3'
 </script>
 
 <template>
