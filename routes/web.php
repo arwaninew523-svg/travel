@@ -2,13 +2,19 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\TourPackageController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::inertia('/', 'Welcome')->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::inertia('/', 'Welcome')->name('home');
 Route::inertia('/about', 'public/About')->name('about');
 Route::inertia('/service', 'public/Service')->name('service');
 Route::inertia('/contact', 'public/Contact')->name('contact');
+Route::get('/packages/{slug}', [TourPackageController::class, 'show'])->name('packages.show');
+
 
 Route::get('/contact/login', function () {
     return Inertia::render('auth/Login', [
@@ -30,6 +36,8 @@ Route::middleware(['auth', 'verified', 'role:admin,operator'])
         Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::patch('users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        Route::resource('/packages', TourPackageController::class);
     });
 
 require __DIR__.'/settings.php';

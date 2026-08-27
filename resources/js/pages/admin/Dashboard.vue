@@ -75,14 +75,14 @@ const statCards: {
 <template>
     <Head title="Dashboard Admin" />
 
-    <div class="flex flex-col space-y-6">
+    <div class="flex flex-col space-y-6 p-8">
         <Heading
             variant="small"
             title="Dashboard Admin"
             description="Ringkasan pengguna yang terdaftar di aplikasi"
         />
 
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ">
             <Card v-for="card in statCards" :key="card.label">
                 <CardHeader
                     class="flex flex-row items-center justify-between space-y-0 pb-2"

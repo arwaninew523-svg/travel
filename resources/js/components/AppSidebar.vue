@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import {
     BookOpen,
     FolderGit2,
+    Package,
     ShieldCheck,
     Users,
 } from '@lucide/vue';
@@ -22,7 +23,9 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard as adminDashboard } from '@/routes/admin';
 import { index as adminUsersIndex } from '@/routes/admin/users';
+import { index as adminpackages } from '@/routes/admin/packages';
 import type { NavItem } from '@/types';
+import { packages } from '@vueuse/core/metadata.cjs';
 
 const page = usePage();
 const authUser = computed(() => page.props.auth?.user);
@@ -43,6 +46,11 @@ const adminNavItems: NavItem[] = [
         title: 'Manajemen Pengguna',
         href: adminUsersIndex(),
         icon: Users,
+    },
+    {
+        title: 'Manajemen Wisata',
+        href: adminpackages(),
+        icon: Package,
     },
 ];
 

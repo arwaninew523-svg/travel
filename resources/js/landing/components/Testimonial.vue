@@ -1,3 +1,38 @@
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+
+const parallaxBg = ref(null);
+let handleScroll;
+
+onMounted(() => {
+  // Load Script Elfsight secara dinamis
+  const scriptId = 'elfsight-platform-script';
+  if (!document.getElementById(scriptId)) {
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = 'https://elfsightcdn.com/platform.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
+  // Handle Efek Parallax Background
+  handleScroll = () => {
+    if (parallaxBg.value) {
+      const rect = parallaxBg.value.getBoundingClientRect();
+      const speed = 0.3;
+      parallaxBg.value.style.transform = `translateY(${rect.top * speed}px)`;
+    }
+  };
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  if (handleScroll) {
+    window.removeEventListener('scroll', handleScroll);
+  }
+});
+</script>
+
 <template>
   <section class="testimonial">
     <div class="parallax-bg" ref="parallaxBg"></div>
@@ -5,6 +40,7 @@
 
     <div class="container">
       <div class="content">
+        <!-- Sisi Kiri: Headline & Deskripsi -->
         <div class="left">
           <h2 class="headline">Discover the world <br>in a new way.</h2>
           <p class="desc">
@@ -14,71 +50,16 @@
           </p>
         </div>
 
+        <!-- Sisi Kanan: Widget Google Reviews Elfsight -->
         <div class="right">
-          <div v-for="(item, index) in items" :key="index" class="testi-bar">
-            <div class="bar-avatar" :style="{ backgroundImage: `url(${item.avatar})` }"></div>
-            <div class="bar-content">
-              <p class="bar-quote">"{{ item.quote }}"</p>
-              <div class="bar-meta">
-                <strong>{{ item.name }}</strong>
-                <span class="bar-stars">{{ '★'.repeat(item.stars) }}</span>
-              </div>
-            </div>
+          <div class="elfsight-container">
+            <div class="elfsight-app-f2b2c4d4-42e8-49ff-add1-dff3e8a2216d" data-elfsight-app-lazy></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<script setup>
-import { onMounted, onUnmounted, ref } from "vue";
-
-const parallaxBg = ref(null)
-const items = [
-  {
-    avatar: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=100&q=80',
-    name: 'Sarah Chen',
-    stars: 5,
-    quote: 'The Bromo sunrise tour was absolutely breathtaking!'
-  },
-  {
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80',
-    name: 'James Williams',
-    stars: 5,
-    quote: 'Ijen crater blue fire is truly a once-in-a-lifetime experience.'
-  },
-  {
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80',
-    name: 'Maria Gonzalez',
-    stars: 5,
-    quote: 'Bali exceeded all my expectations. Unforgettable trip!'
-  },
-  {
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80',
-    name: 'David Park',
-    stars: 5,
-    quote: 'Tumpak Sewu waterfall was the highlight of my Java trip.'
-  }
-]
-
-let handleScroll
-
-onMounted(() => {
-  handleScroll = () => {
-    if (parallaxBg.value) {
-      const rect = parallaxBg.value.getBoundingClientRect()
-      const speed = 0.3
-      parallaxBg.value.style.transform = `translateY(${rect.top * speed}px)`
-    }
-  }
-  window.addEventListener('scroll', handleScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
-</script>
 
 <style scoped>
 .testimonial {
@@ -142,70 +123,20 @@ onUnmounted(() => {
 }
 
 .right {
-  flex: 0 0 420px;
+  flex: 0 0 460px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
-.testi-bar {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background: rgba(24, 24, 27, 0.7);
+/* Penyesuaian container agar widget menyatu dengan tema gelap */
+.elfsight-container {
+  background: rgba(24, 24, 27, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 18px 22px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.testi-bar:hover {
-  transform: translateX(-6px);
+  border-radius: 20px;
+  padding: 10px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  border-color: rgba(167, 139, 250, 0.4);
-}
-
-.bar-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
-  border: 2px solid rgba(167, 139, 250, 0.3);
-}
-
-.bar-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.bar-quote {
-  color: #d4d4d8;
-  font-size: 0.88em;
-  line-height: 1.5;
-  margin-bottom: 8px;
-  font-style: italic;
-}
-
-.bar-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.bar-meta strong {
-  color: #ffffff;
-  font-size: 0.85em;
-  font-weight: 500;
-}
-
-.bar-stars {
-  color: #fbbf24;
-  font-size: 0.8em;
-  letter-spacing: 1px;
 }
 
 @media (max-width: 960px) {
@@ -233,8 +164,8 @@ onUnmounted(() => {
     font-size: 1.8em;
   }
 
-  .testi-bar {
-    padding: 14px 16px;
+  .elfsight-container {
+    padding: 10px;
   }
 }
 </style>
