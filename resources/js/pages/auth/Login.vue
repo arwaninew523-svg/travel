@@ -1,132 +1,90 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
-import PasskeyVerify from '@/components/PasskeyVerify.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
-import TeamInvitationAlert from '@/components/TeamInvitationAlert.vue';
-import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
-import { request } from '@/routes/password';
-import type { TeamInvitationContext } from '@/types';
-
-defineOptions({
-    layout: {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
-    },
-});
-
-defineProps<{
-    status?: string;
-    canResetPassword: boolean;
-    teamInvitation?: TeamInvitationContext | null;
-}>();
 </script>
 
 <template>
     <Head title="Log in" />
 
-    <div
-        v-if="status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
-    >
-        {{ status }}
-    </div>
-
-    <TeamInvitationAlert
-        v-if="teamInvitation"
-        :invitation="teamInvitation"
-        action="Log in"
-    />
-
-    <PasskeyVerify />
-
-    <Form
-        :action="store.url()"
-        method="post"
-        :reset-on-success="['password']"
-        v-slot="{ errors, processing }"
-        class="flex flex-col gap-6"
-    >
-        <div class="grid gap-6">
-            <div class="grid gap-2">
-                <Label for="email">Email address</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    autofocus
-                    :tabindex="1"
-                    autocomplete="email"
-                    placeholder="email@example.com"
-                />
-                <InputError :message="errors.email" />
+    <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 px-4">
+        <div class="w-full max-w-lg rounded-3xl border-2 border-emerald-200 bg-white p-10 shadow-[0_20px_50px_-12px_rgba(16,185,129,0.25)]">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+                <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
             </div>
 
-            <div class="grid gap-2">
-                <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
-                    <TextLink
-                        v-if="canResetPassword"
-                        :href="request()"
-                        class="text-sm"
-                        :tabindex="5"
-                    >
-                        Forgot password?
-                    </TextLink>
+            <h1 class="mb-1 text-center text-2xl font-extrabold text-emerald-900">
+                Welcome to Website
+            </h1>
+            <p class="mb-7 text-center text-sm text-slate-500">
+                Masukkan username dan password Anda.
+            </p>
+
+            <Form
+                :action="store.url()"
+                method="post"
+                :reset-on-success="['password']"
+                v-slot="{ errors, processing }"
+                class="flex flex-col gap-5"
+            >
+                <div class="grid gap-2">
+                    <Label for="email" class="text-slate-700">Username</Label>
+                    <Input
+                        id="email"
+                        type="text"
+                        name="email"
+                        required
+                        autofocus
+                        :tabindex="1"
+                        autocomplete="username"
+                        placeholder="Username"
+                        class="!border-emerald-200 !focus-visible:ring-emerald-500"
+                    />
+                    <InputError :message="errors.email" />
                 </div>
-                <PasswordInput
-                    id="password"
-                    name="password"
-                    required
-                    :tabindex="2"
-                    autocomplete="current-password"
-                    placeholder="Password"
-                />
-                <InputError :message="errors.password" />
-            </div>
 
-            <div class="flex items-center justify-between">
-                <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" name="remember" :tabindex="3" />
-                    <span>Remember me</span>
-                </Label>
-            </div>
+                <div class="grid gap-2">
+                    <Label for="password" class="text-slate-700"
+                        >Password</Label
+                    >
+                    <PasswordInput
+                        id="password"
+                        name="password"
+                        required
+                        :tabindex="2"
+                        autocomplete="current-password"
+                        placeholder="Password"
+                        class="!border-emerald-200 !focus-visible:ring-emerald-500"
+                    />
+                    <InputError :message="errors.password" />
+                </div>
 
-            <Button
-                type="submit"
-                class="mt-4 w-full"
-                :tabindex="4"
-                :disabled="processing"
-                data-test="login-button"
-            >
-                <Spinner v-if="processing" />
-                Log in
-            </Button>
+                <Button
+                    type="submit"
+                    class="mt-2 w-full !bg-emerald-600 !text-white hover:!bg-emerald-700"
+                    :tabindex="3"
+                    :disabled="processing"
+                    data-test="login-button"
+                >
+                    Log in
+                </Button>
+            </Form>
         </div>
-
-        <div class="text-center text-sm text-muted-foreground">
-            Don't have an account?
-            <TextLink
-                :href="
-                    register({
-                        query: {
-                            invitation: teamInvitation?.code,
-                        },
-                    })
-                "
-                :tabindex="5"
-                data-test="register-link"
-            >
-                Sign up
-            </TextLink>
-        </div>
-    </Form>
+    </div>
 </template>

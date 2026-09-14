@@ -1,8 +1,8 @@
 <template>
   <section class="pricing">
     <div class="container">
-      <h2 class="section-title">Paket Wisata</h2>
-      <p class="section-subtitle">Pilih destinasi impianmu dengan harga terbaik</p>
+      <h2 class="section-title">Tour Package</h2>
+      <p class="section-subtitle">Choose your dream destination at the best price</p>
 
       <div class="wrapper">
         <!-- Button Prev -->

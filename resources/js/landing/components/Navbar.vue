@@ -1,6 +1,6 @@
 <template>
   <header :class="{ 'scrolled': scrolled }">
-    <h2 class="logo">Ijen <span>Bromo</span> Travel</h2>
+    <h2 class="logo">Indonesia <span>Culture</span> Trip</h2>
     <nav :class="['navigation', { 'open': menuOpen }]">
       <Link href="/" :class="{ active: $page.url === '/' }">Home</Link>
       <Link href="/about" :class="{ active: $page.url.startsWith('/about') }">About</Link>

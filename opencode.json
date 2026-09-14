@@ -1,5 +1,22 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "provider": {
+        "9router": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "9Router",
+            "options": {
+                "baseURL": "http://localhost:20128/v1",
+                "apiKey": "sk-e251289a31dffa6d-ah42tj-c6942f9d"
+            },
+            "models": {
+                "my-agents": {
+                    "name": "My Agents (9Router Combo)"
+                }
+            }
+        }
+    },
+    "model": "9router/my-agents",
+    "small_model": "9router/my-agents",
     "mcp": {
         "laravel-boost": {
             "type": "local",
