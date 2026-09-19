@@ -11,80 +11,108 @@ import { store } from '@/routes/login';
 <template>
     <Head title="Log in" />
 
-    <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-100 via-emerald-50 to-teal-100 px-4">
-        <div class="w-full max-w-lg rounded-3xl border-2 border-emerald-200 bg-white p-10 shadow-[0_20px_50px_-12px_rgba(16,185,129,0.25)]">
-            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
-                <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-            </div>
-
-            <h1 class="mb-1 text-center text-2xl font-extrabold text-emerald-900">
-                Welcome to Website
-            </h1>
-            <p class="mb-7 text-center text-sm text-slate-500">
-                Masukkan username dan password Anda.
-            </p>
-
-            <Form
-                :action="store.url()"
-                method="post"
-                :reset-on-success="['password']"
-                v-slot="{ errors, processing }"
-                class="flex flex-col gap-5"
-            >
-                <div class="grid gap-2">
-                    <Label for="email" class="text-slate-700">Username</Label>
-                    <Input
-                        id="email"
-                        type="text"
-                        name="email"
-                        required
-                        autofocus
-                        :tabindex="1"
-                        autocomplete="username"
-                        placeholder="Username"
-                        class="!border-emerald-200 !focus-visible:ring-emerald-500"
-                    />
-                    <InputError :message="errors.email" />
-                </div>
-
-                <div class="grid gap-2">
-                    <Label for="password" class="text-slate-700"
-                        >Password</Label
+    <div class="flex min-h-screen">
+        <!-- Kiri: Background Alam -->
+        <div class="relative hidden w-1/2 items-center justify-center overflow-hidden lg:flex">
+            <img src="https://unsplash.com/id/foto/pohon-hijau-di-lapangan-coklat-di-bawah-langit-biru-di-siang-hari-xX3T2C8ff1o" alt="Mountain scenery" class="absolute inset-0 h-full w-full object-cover"/>
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/80 via-teal-800/70 to-cyan-900/80"></div>
+            <div class="relative z-10 px-12 text-center">
+                <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
+                    <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                     >
-                    <PasswordInput
-                        id="password"
-                        name="password"
-                        required
-                        :tabindex="2"
-                        autocomplete="current-password"
-                        placeholder="Password"
-                        class="!border-emerald-200 !focus-visible:ring-emerald-500"
-                    />
-                    <InputError :message="errors.password" />
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                </div>
+                <h1 class="mb-4 text-4xl font-bold text-white">
+                    Indonesia Culture Trip
+                </h1>
+                <p class="text-lg text-emerald-100/80">
+                    Explore the natural beauty of Indonesia with us
+                </p>
+            </div>
+        </div>
+
+        <!-- Kanan: Form Login -->
+        <div
+            class="flex w-full items-center justify-center bg-white py-12 pl-8 pr-6 lg:w-1/2 lg:pl-16 lg:pr-10"
+        >
+            <div class="w-full max-w-md">
+                <div class="mb-8 text-left">
+                    <h2 class="text-3xl font-bold text-gray-900">Welcome to website </h2>
+                    <p class="mt-2 text-sm text-gray-500">
+                        Enter the homepage to manage your website
+                    </p>
                 </div>
 
-                <Button
-                    type="submit"
-                    class="mt-2 w-full !bg-emerald-600 !text-white hover:!bg-emerald-700"
-                    :tabindex="3"
-                    :disabled="processing"
-                    data-test="login-button"
+                <Form
+                    :action="store.url()"
+                    method="post"
+                    :reset-on-success="['password']"
+                    v-slot="{ errors, processing }"
+                    class="flex flex-col gap-5"
                 >
-                    Log in
-                </Button>
-            </Form>
+                    <div class="grid gap-2">
+                        <Label for="email" class="text-sm font-medium text-gray-700">
+                            Username
+                        </Label>
+
+                        <Input
+                            id="email"
+                            type="text"
+                            name="email"
+                            required
+                            autofocus
+                            :tabindex="1"
+                            autocomplete="username"
+                            placeholder="Masukkan username"
+                            class="h-11 border-gray-300 focus-visible:ring-emerald-500"
+                        />
+
+                        <InputError :message="errors.email" />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="password" class="text-sm font-medium text-gray-700">
+                            Password
+                        </Label>
+
+                        <PasswordInput
+                            id="password"
+                            name="password"
+                            required
+                            :tabindex="2"
+                            autocomplete="current-password"
+                            placeholder="Masukkan password"
+                            class="h-11 border-gray-300 focus-visible:ring-emerald-500"
+                        />
+
+                        <InputError :message="errors.password" />
+                    </div>
+
+                    <Button
+                        type="submit"
+                        class="mt-2 h-11 w-full bg-emerald-600 text-white hover:bg-emerald-700"
+                        :tabindex="3"
+                        :disabled="processing"
+                        data-test="login-button"
+                    >
+                        {{ processing ? 'Masuk...' : 'Masuk' }}
+                    </Button>
+                </Form>
+
+                <p class="mt-8 text-left text-xs text-gray-400">
+                    &copy; {{ new Date().getFullYear() }} Ijen Bromo Travel
+                </p>
+            </div>
         </div>
     </div>
 </template>

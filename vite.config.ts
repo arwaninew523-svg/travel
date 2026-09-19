@@ -26,7 +26,6 @@ export default defineConfig({
             ],
         }),
         inertia(),
-        tailwindcss(),
         vue({
             template: {
                 transformAssetUrls: {
@@ -35,6 +34,7 @@ export default defineConfig({
                 },
             },
         }),
+        tailwindcss(),
         wayfinder({
             formVariants: true,
         }),
