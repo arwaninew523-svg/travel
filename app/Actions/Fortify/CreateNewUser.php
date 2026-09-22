@@ -16,24 +16,20 @@ class CreateNewUser implements CreatesNewUsers
 
     public function __construct(private CreateTeam $createTeam)
     {
-        //
     }
 
-    /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
-     */
     public function create(array $input): User
     {
         Validator::make($input, [
             ...$this->profileRules(),
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
         ])->validate();
 
         return DB::transaction(function () use ($input) {
             $user = User::create([
                 'name' => $input['name'],
+                'username' => $input['username'],
                 'email' => $input['email'],
                 'password' => $input['password'],
             ]);

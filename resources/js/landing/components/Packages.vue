@@ -1,8 +1,8 @@
 <template>
   <section class="pricing">
     <div class="container">
-      <h2 class="section-title">Tour Package</h2>
-      <p class="section-subtitle">Choose your dream destination at the best price</p>
+      <h2 class="section-title">Start Your Journey</h2>
+      <p class="section-subtitle">Choose your dream destination</p>
 
       <div class="wrapper">
         <!-- Button Prev -->
@@ -76,7 +76,7 @@
 
       <!-- State Jika Data Kosong -->
       <div v-if="!packages || packages.length === 0" class="py-12 text-center text-slate-500">
-        Belum ada paket wisata yang aktif saat ini.
+        There are currently no active tour packages.
       </div>
     </div>
   </section>

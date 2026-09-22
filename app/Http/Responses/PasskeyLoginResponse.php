@@ -12,7 +12,7 @@ class PasskeyLoginResponse implements PasskeyLoginResponseContract
     public function toResponse($request): Response
     {
         return $request->wantsJson()
-            ? new JsonResponse(['redirect' => redirect()->intended(Fortify::redirects('login'))->getTargetUrl()], 200)
-            : redirect()->intended(Fortify::redirects('login'));
+            ? new JsonResponse(['redirect' => redirect()->intended(config('fortify.home'))->getTargetUrl()], 200)
+            : redirect()->intended(config('fortify.home'));
     }
 }

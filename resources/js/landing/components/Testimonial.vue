@@ -128,7 +128,6 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-/* Penyesuaian container agar widget menyatu dengan tema gelap */
 .elfsight-container {
   background: rgba(24, 24, 27, 0.4);
   backdrop-filter: blur(12px);
