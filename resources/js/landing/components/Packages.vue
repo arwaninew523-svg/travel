@@ -24,7 +24,7 @@
               
               <!-- Badge Durasi -->
               <div class="card-badge">
-                {{ item.duration_days }}H {{ item.duration_nights }}M
+                {{ item.duration_days }}H {{ item.duration_nights }}
               </div>
 
               <!-- Badge Harga Format Rupiah -->
