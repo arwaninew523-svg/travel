@@ -13,6 +13,7 @@ export default defineConfig({
         hmr: {
             host: 'localhost',
             port: 5173,
+            protocol: 'ws',
         },
         watch: {
             usePolling: true,
@@ -29,7 +30,9 @@ export default defineConfig({
                 }),
             ],
         }),
-        inertia(),
+        inertia({
+            ssr: false,
+        }),
         vue({
             template: {
                 transformAssetUrls: {

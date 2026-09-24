@@ -48,25 +48,25 @@ let interval
 
 const slides = [
   {
-    image: 'https://images.unsplash.com/photo-1705905343745-6d901a93e946?q=80',
+    image: '/borobudur.jpg',
     name: 'Borobudur',
     location: 'Java Center',
     desc: 'Temples, surf, and sunset — the Island of the Gods awaits.'
   },
   {
-    image: 'https://images.unsplash.com/photo-1615104168825-3d6391ccc228?w=1600&q=80',
+    image: '/tumpak_sewu.jpg',
     name: 'Tumpak Sewu',
     location: 'Lumajang',
     desc: 'A majestic curtain of water falling into a lush emerald canyon.'
   },
   {
-    image: 'https://images.unsplash.com/photo-1566559631170-a462eb20c432?q=80',
+    image: '/prambanan.jpg',
     name: 'Prambanan',
     location: 'Yogyakarta',
     desc: 'Blue flames and a turquoise crater lake, a surreal volcanic wonder.'
   },
   {
-    image: 'https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&q=80',
+    image: '/bromo.jpg',
     name: 'Bromo',
     location: 'East Java',
     desc: 'Watch the sunrise over an ancient volcanic landscape from the sea of sand.'

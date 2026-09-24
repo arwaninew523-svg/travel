@@ -14,11 +14,11 @@ import { store } from '@/routes/login';
     <div class="flex min-h-screen">
         <div class="relative hidden w-2/3 items-center justify-center overflow-hidden lg:flex">
             <img
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80"
-                alt="Mountain scenery"
+                src="/ijen.jpg"
+                alt="Danau dekat pegunungan"
                 class="absolute inset-0 h-full w-full object-cover"
             />
-            <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/70 via-teal-800/60 to-cyan-900/70"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-emerald-900/50 to-teal-900/70"></div>
             <div class="absolute inset-0 opacity-20">
                 <div class="absolute top-20 left-20 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
                 <div class="absolute bottom-20 right-20 h-96 w-96 rounded-full bg-emerald-300/20 blur-3xl"></div>
@@ -80,7 +80,7 @@ import { store } from '@/routes/login';
                                 :tabindex="1"
                                 autocomplete="username"
                                 placeholder="Masukkan username"
-                                class="h-12 rounded-xl border-gray-200 bg-gray-50 pl-10 focus-visible:ring-emerald-500 focus-visible:border-emerald-500"
+                                class="h-12 rounded-xl border-emerald-500 bg-white pl-10 focus-visible:border-emerald-500 focus-visible:ring-emerald-500"
                             />
                             <svg class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

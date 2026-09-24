@@ -1,0 +1,8 @@
+node_modules
+vendor
+.git
+.docker
+.vscode
+.idea
+*.log
+.env
