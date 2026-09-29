@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\TourPackage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
 
 class TourPackageController extends Controller
 {
@@ -69,12 +69,13 @@ class TourPackageController extends Controller
         ]);
 
         // Generate slug dari title
-        $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(5);
+        $validated['slug'] = Str::slug($validated['title']).'-'.Str::random(5);
 
         // Proses upload thumbnail jika ada
         if ($request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('packages', 'public');
-            $validated['thumbnail'] = Storage::url($path);
+            $filename = Str::slug($validated['title']).'-'.Str::random(5).'.'.$request->file('thumbnail')->getClientOriginalExtension();
+            $request->file('thumbnail')->move(public_path('packages'), $filename);
+            $validated['thumbnail'] = '/packages/'.$filename;
         }
 
         // Pisahkan data services dari array validated agar tidak error saat insert ke table tour_packages
@@ -85,11 +86,13 @@ class TourPackageController extends Controller
         $package = TourPackage::create($validated);
 
         // 2. Hubungkan data services via relasi pivot sync()
-        if (!empty($serviceIds)) {
+        if (! empty($serviceIds)) {
             $package->services()->sync($serviceIds);
         }
 
-        return redirect()->route('admin.packages.index')->with('success', 'Paket wisata berhasil ditambahkan!');
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Paket wisata berhasil ditambahkan!']);
+
+        return redirect()->route('admin.packages.index');
     }
 
     public function edit(TourPackage $package)
@@ -118,20 +121,23 @@ class TourPackageController extends Controller
 
         // Update slug jika title berubah
         if ($package->title !== $validated['title']) {
-            $validated['slug'] = Str::slug($validated['title']) . '-' . Str::random(5);
+            $validated['slug'] = Str::slug($validated['title']).'-'.Str::random(5);
         }
 
         // Cek jika ada upload foto baru
         if ($request->hasFile('thumbnail')) {
-            // Hapus foto lama dari storage jika ada
+            // Hapus foto lama jika ada
             if ($package->thumbnail) {
-                $oldPath = str_replace('/storage/', '', $package->thumbnail);
-                Storage::disk('public')->delete($oldPath);
+                $oldPath = public_path($package->thumbnail);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
             }
 
             // Simpan foto baru
-            $path = $request->file('thumbnail')->store('packages', 'public');
-            $validated['thumbnail'] = Storage::url($path);
+            $filename = Str::slug($validated['title']).'-'.Str::random(5).'.'.$request->file('thumbnail')->getClientOriginalExtension();
+            $request->file('thumbnail')->move(public_path('packages'), $filename);
+            $validated['thumbnail'] = '/packages/'.$filename;
         } else {
             // Jangan timpa thumbnail jika tidak ada file baru yang diunggah
             unset($validated['thumbnail']);
@@ -147,13 +153,25 @@ class TourPackageController extends Controller
         // 2. Sync relasi pivot services (akan otomatis menghapus/menambah pivot yang dicentang)
         $package->services()->sync($serviceIds);
 
-        return redirect()->route('admin.packages.index')->with('success', 'Paket berhasil diperbarui');
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Paket berhasil diperbarui']);
+
+        return redirect()->route('admin.packages.index');
     }
 
     public function destroy(TourPackage $package)
     {
+        // Hapus file gambar jika ada
+        if ($package->thumbnail) {
+            $path = public_path($package->thumbnail);
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+
         $package->delete();
 
-        return redirect()->back()->with('success', 'Paket berhasil dihapus');
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'Paket berhasil dihapus']);
+
+        return redirect()->back();
     }
 }

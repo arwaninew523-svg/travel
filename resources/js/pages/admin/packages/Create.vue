@@ -131,6 +131,19 @@ const submit = () => {
                     <span v-if="form.errors.location" class="text-xs text-destructive">{{ form.errors.location }}</span>
                 </div>
 
+                <div class="space-y-2">
+                    <label for="price" class="text-sm font-medium leading-none">Harga (IDR)</label>
+                    <input
+                        id="price"
+                        type="number"
+                        v-model="form.price"
+                        min="0"
+                        placeholder="Contoh: 1500000"
+                        class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        :class="{ 'border-destructive': form.errors.price }"
+                    />
+                    <span v-if="form.errors.price" class="text-xs text-destructive">{{ form.errors.price }}</span>
+                </div>
             </div>
 
             <!-- Duration & Capacity -->
